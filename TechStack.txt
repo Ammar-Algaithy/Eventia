@@ -1,0 +1,63 @@
+Tech Stack
+Back End (Server-Side)
+
+.NET Core 8.0 (C#)
+Purpose: Provides the API and business logic.
+Architecture: Implements Clean Architecture.
+Domain Layer: Defines core business entities like Activity.
+Application Layer: Contains use cases (e.g., GetActivities, CreateActivity).
+Interface Adapters: Includes API controllers and repository implementations.
+Frameworks and Drivers: Uses ASP.NET Core and Entity Framework Core.
+Entity Framework Core 8
+Purpose: Manages database interactions.
+Database: Relational database (e.g., SQL Server).
+Details: Handles CRUD operations through repository patterns.
+MediatR
+Purpose: Simplifies communication between layers using CQRS (Command Query Responsibility Segregation).
+Usage: Processes commands and queries (e.g., GetActivitiesQuery).
+Front End (Client-Side)
+
+React
+Purpose: Builds the user interface.
+Details: React components are styled with Tailwind CSS and written in TypeScript for type safety.
+Vite
+Purpose: Provides a fast and modern build tool for the React app.
+Benefits: Faster builds, hot module replacement (HMR), and optimized performance.
+Axios
+Purpose: Handles HTTP requests to the API.
+Usage: Fetches data (e.g., activities list) and sends user inputs (e.g., creating a new activity).
+Tailwind CSS
+Purpose: Provides a utility-first CSS framework for styling.
+Details: Tailwind classes are used inline in JSX for rapid and consistent UI development.
+TypeScript
+Purpose: Adds type safety to the React app.
+Usage: Ensures robust data handling between the front end and back end.
+Architecture
+The project follows Clean Architecture, which separates concerns across multiple layers:
+
+Domain Layer (Entities)
+Defines business rules and core entities (e.g., Activity).
+Application Layer (Use Cases)
+Contains specific business logic for each use case (e.g., fetching or creating activities).
+Interface Adapters Layer (Controllers/Repositories)
+Connects the Application Layer with external systems (e.g., API, database).
+Frameworks and Drivers Layer
+Includes external dependencies like React, Tailwind, and the database.
+Development Workflow
+Back End:
+API built with .NET Core.
+Routes defined in API controllers (/api/activities).
+Business logic encapsulated in MediatR commands and queries.
+Front End:
+React application built using Vite.
+Axios handles API requests (e.g., fetching activities from /api/activities).
+Tailwind CSS for responsive and clean UI design.
+Database:
+Database schema managed using Entity Framework Core migrations.
+CRUD operations implemented through repositories.
+Key Features
+Clean Architecture: Separation of concerns for scalability and maintainability.
+Modern UI: Styled with Tailwind CSS for a consistent and responsive design.
+Type-Safe Front End: TypeScript ensures safer and more predictable code.
+Fast Development: Vite enables quick builds and live reloading.
+Efficient API Requests: Axios manages data communication between the front end and back end.
