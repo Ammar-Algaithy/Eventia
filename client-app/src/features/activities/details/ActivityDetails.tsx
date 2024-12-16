@@ -1,14 +1,13 @@
-import { Activity } from "../../../app/models/activity";
+import { observer } from "mobx-react-lite";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
+import { useStore } from "../../../stores/store";
 
-interface Props {
-  activity: Activity;
-  cancelSelectedActivity: () => void;
-  openForm: (id: string) => void;
-  
-}
+export default observer(function ActivityDetails() {
+    const {activityStore} = useStore();
+    const { selectedActivity: activity, openForm, cancelSelectedActivity } = activityStore;
 
-export default function ActivityDetails({ activity, cancelSelectedActivity, openForm }: Props) {
-  return (
+    if (!activity) return <LoadingComponent />
+    return (
     <div className="max-w-md mx-auto bg-gradient-to-br from-white via-gray-100 to-gray-50 border border-gray-300 rounded-3xl shadow-2xl overflow-hidden transition-transform duration-500 hover:scale-105 hover:shadow-2xl">
     {/* Image Section */}
     <img
@@ -75,4 +74,4 @@ export default function ActivityDetails({ activity, cancelSelectedActivity, open
         </div>
     </div>
   );
-}
+})

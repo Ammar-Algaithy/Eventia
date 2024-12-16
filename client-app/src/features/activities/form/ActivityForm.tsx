@@ -1,19 +1,10 @@
 import React, { ChangeEvent, useState } from "react";
-import { Activity } from "../../../app/models/activity";
+import { observer } from "mobx-react-lite";
+import { useStore } from "../../../stores/store";
 
-interface Props {
-  activity: Activity | undefined;
-  closeForm: () => void;
-  createOrEdit: (activity: Activity) => void;
-  submitting: boolean; // Note: Use `submitting` instead of `submetting`
-}
-
-export default function ActivityForm({
-  activity: selectedActivity,
-  closeForm,
-  createOrEdit,
-  submitting,
-}: Props) {
+export default observer(function ActivityForm() {
+  const {activityStore} = useStore();
+  const {selectedActivity, closeForm, createActivity, updateActivity, loading} = activityStore;
   const initialState = selectedActivity ?? {
     id: "",
     title: "",
@@ -24,11 +15,17 @@ export default function ActivityForm({
     venue: "",
   };
 
+
   const [activity, setActivity] = useState(initialState);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    createOrEdit(activity);
+    if (activity.id){
+      updateActivity(activity);
+    } else {
+      createActivity(activity);
+    }
+    
   }
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -131,9 +128,9 @@ export default function ActivityForm({
           type="submit"
           className="rounded-md bg-indigo-600 px-4 py-2 text-white font-semibold hover:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
-          {submitting ? "Saving..." : "Create"}
+          {loading ? "Saving..." : "Save"}
         </button>
       </div>
     </form>
   );
-}
+})

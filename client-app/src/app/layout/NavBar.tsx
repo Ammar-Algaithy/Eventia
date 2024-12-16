@@ -1,8 +1,9 @@
+import { observer } from "mobx-react-lite";
+import { useStore } from "../../stores/store";
 
-interface Props {
-  openForm: () => void;
-}
-export default function NavBar({openForm}: Props) {
+
+export default observer(function NavBar() {
+  const {activityStore} = useStore();
   return (
     <nav className="bg-gray-800">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -29,7 +30,7 @@ export default function NavBar({openForm}: Props) {
             </a>
             <button
               className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-md text-sm font-medium"
-              onClick={openForm}
+              onClick={() => activityStore.openForm()}
             >
               Create Activity
             </button>
@@ -38,4 +39,4 @@ export default function NavBar({openForm}: Props) {
       </div>
     </nav>
   );
-}
+})

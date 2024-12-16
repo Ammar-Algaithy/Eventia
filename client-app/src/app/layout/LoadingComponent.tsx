@@ -10,7 +10,7 @@ interface Props {
     return (
       <div
         className={`flex items-center justify-center h-screen ${
-          inverted ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+          inverted ? "bg-gray-800 text-white" : "bg-white text-gray-900"
         }`}
       >
         <div className="flex flex-col items-center gap-4">

@@ -1,15 +1,11 @@
 import { SyntheticEvent, useState } from "react";
-import { Activity } from "../../../app/models/activity";
+import { useStore } from "../../../stores/store";
+import { observer } from "mobx-react-lite";
 
-interface Props {
-  activities: Activity[];
-  selectActivity: (id: string) => void;
-  deleteActivity: (id: string) => void;
-  submitting: boolean;
-}
-
-export default function PostCard({ activities, selectActivity, deleteActivity, submitting }: Props) {
+export default observer(function ActivityList() {
   const [target, setTarget] = useState('');
+  const {activityStore} = useStore();
+  const {activitiesByDate, selectActivity, deleteActivity, loading} = activityStore;
 
   function handleActivityDelete(e: SyntheticEvent<HTMLButtonElement>, id: string){
     setTarget(e.currentTarget.name);
@@ -18,9 +14,9 @@ export default function PostCard({ activities, selectActivity, deleteActivity, s
 
   return (
     <div className="flex flex-col items-center gap-6">
-      {activities.map((activity) => (
+      {activitiesByDate.map((activity, index) => (
         <div
-          key={activity.id}
+          key={index}
           className="w-full max-w-2xl bg-white border border-gray-300 rounded-lg shadow-md overflow-hidden"
         >
           {/* Header: Title */}
@@ -50,7 +46,7 @@ export default function PostCard({ activities, selectActivity, deleteActivity, s
             </p>
             <button
               onClick={() => selectActivity(activity.id)}
-              className="bg-blue-500 text-white text-sm px-4 py-2 rounded-lg h-10 hover:bg-blue-600 flex items-center gap-2 shadow-md hover:shadow-lg transition-all duration-300"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded-lg h-10 flex items-center gap-2 shadow-md hover:shadow-lg transition-all duration-300"
             >
               View
               <svg
@@ -73,7 +69,7 @@ export default function PostCard({ activities, selectActivity, deleteActivity, s
               type="submit"
               name={activity.id}
               className="bg-red-500 text-white text-sm px-4 py-2 rounded-lg h-10 flex items-center gap-2 shadow-md hover:bg-red-600 hover:shadow-lg transition-all duration-300"
-              disabled={submitting}
+              disabled={loading}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -85,11 +81,11 @@ export default function PostCard({ activities, selectActivity, deleteActivity, s
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
-              {target === activity.id && submitting ? "Deleting..." : "Delete"}
+              {target === activity.id && loading ? "Deleting..." : "Delete"}
             </button>
           </div>
         </div>
       ))}
     </div>
   );
-}
+})
