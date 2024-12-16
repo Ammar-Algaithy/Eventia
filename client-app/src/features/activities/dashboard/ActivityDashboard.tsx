@@ -1,17 +1,23 @@
 import ActivityList from "./ActivityList";
-import ActivityDetails from "../details/ActivityDetails";
-import ActivityForm from "../form/ActivityForm";
 import { useStore } from "../../../stores/store";
 import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
 
 export default observer(function ActivityDashboard() {
     const {activityStore} = useStore();
-    const {selectedActivity, editMode, loadingInitial} = activityStore;
+    const {loadActivities, activityRegistry, loadingInitial} = activityStore;
 
-    if (loadingInitial) {
-        // Render a skeleton or placeholder while loading
-        return <div>Loading activities...</div>;
-    }
+    useEffect(() => {
+      if (activityRegistry.size <= 1)
+        {
+            loadActivities();
+        }
+    }, [loadActivities, activityRegistry.size]);
+  
+    
+    if (loadingInitial) return <LoadingComponent content='Loading ...' />
+   
     return (
         <main>
             <header className="bg-white shadow">
@@ -25,23 +31,7 @@ export default observer(function ActivityDashboard() {
                 <ActivityList />
             </div>
             </div>
-            
-            {/* Activity Details Modal */}
-            {selectedActivity && !editMode && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="relative p-6 w-full max-w-lg rounded-lg shadow-lg">
-                        <ActivityDetails />
-                    </div>
-                </div>
-            )}
-
-            {editMode && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="relative p-6 w-full max-w-lg rounded-lg shadow-lg">
-                        <ActivityForm />
-                    </div>
-                </div>
-            )}
+            <h2>Activity filter</h2>
         </main>
     );
   })

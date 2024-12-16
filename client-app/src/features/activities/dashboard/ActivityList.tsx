@@ -1,11 +1,12 @@
 import { SyntheticEvent, useState } from "react";
 import { useStore } from "../../../stores/store";
 import { observer } from "mobx-react-lite";
+import { NavLink } from "react-router-dom";
 
 export default observer(function ActivityList() {
   const [target, setTarget] = useState('');
   const {activityStore} = useStore();
-  const {activitiesByDate, selectActivity, deleteActivity, loading} = activityStore;
+  const {activitiesByDate, deleteActivity, loading} = activityStore;
 
   function handleActivityDelete(e: SyntheticEvent<HTMLButtonElement>, id: string){
     setTarget(e.currentTarget.name);
@@ -44,8 +45,8 @@ export default observer(function ActivityList() {
             <p className="text-sm text-gray-600 border border-gray-300 rounded-lg h-10 flex items-center px-4 py-1">
               {activity.category}
             </p>
-            <button
-              onClick={() => selectActivity(activity.id)}
+            <NavLink
+              to={`/activities/${activity.id}`}
               className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded-lg h-10 flex items-center gap-2 shadow-md hover:shadow-lg transition-all duration-300"
             >
               View
@@ -63,7 +64,7 @@ export default observer(function ActivityList() {
                   d="M15.75 9V5.25a2.25 2.25 0 00-2.25-2.25h-6a2.25 2.25 0 00-2.25 2.25v13.5a2.25 2.25 0 002.25 2.25H9m6.75-6.75L21 12m0 0l-5.25-5.25M21 12H9"
                 />
               </svg>
-            </button>
+            </NavLink>
             <button
               onClick={(e) => handleActivityDelete(e, activity.id)}
               type="submit"

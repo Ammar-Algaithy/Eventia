@@ -1,29 +1,22 @@
-import { useEffect } from 'react';
 import NavBar from './NavBar';
-import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
-import LoadingComponent from './LoadingComponent';
-import { useStore } from '../../stores/store';
 import { observer } from 'mobx-react-lite';
+import { Outlet, useLocation } from 'react-router-dom';
+import HomePage from '../../features/home/HomePage';
 
 function App() {
 
-  const {activityStore} = useStore();
-
-  useEffect(() => {
-    if (activityStore.activityRegistry.size === 0) {
-        activityStore.loadActivities();
-    }
-}, [activityStore]);
-
-  
-  if (activityStore.loadingInitial) return <LoadingComponent content='Loading ...' />
+  const location = useLocation();
   return (
     <main>
-      <NavBar />
-      {/* Dashboard */}
-      <div>
-        <ActivityDashboard />
-      </div>
+      {location.pathname === '/' ? <HomePage /> : (
+        <>
+          <NavBar />
+          {/* Dashboard */}
+          <div>
+            <Outlet />
+          </div>
+            </>
+          )}
     </main>
   );
 }

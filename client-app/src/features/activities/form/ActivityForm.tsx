@@ -1,11 +1,20 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../stores/store";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { Activity } from "../../../app/models/activity";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
+import {v4 as uuid} from 'uuid';
 
 export default observer(function ActivityForm() {
   const {activityStore} = useStore();
-  const {selectedActivity, closeForm, createActivity, updateActivity, loading} = activityStore;
-  const initialState = selectedActivity ?? {
+  const {loadActivity, loadingInitial, createActivity, updateActivity, loading} = activityStore;
+
+  const navigate = useNavigate();
+
+  const {id} = useParams();
+
+  const [activity, setActivity] = useState<Activity>({
     id: "",
     title: "",
     date: "",
@@ -13,25 +22,31 @@ export default observer(function ActivityForm() {
     category: "",
     city: "",
     venue: "",
-  };
+  });
 
-
-  const [activity, setActivity] = useState(initialState);
+  useEffect(() => {
+    if (id) loadActivity(id).then(activity => setActivity(activity!));
+  }, [id, loadActivity]);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (activity.id){
-      updateActivity(activity);
+    if (!activity.id) {
+      activity.id = uuid();
+      createActivity(activity).then(() => 
+        navigate(`/activities/${activity.id}`))
     } else {
-      createActivity(activity);
+      updateActivity(activity).then(() =>
+        navigate(`/activities/${activity.id}`)
+      )
     }
-    
   }
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = event.target;
     setActivity({ ...activity, [name]: value });
   }
+
+  if (loadingInitial) return <LoadingComponent content="Loading Activity..." />
 
   return (
     <form
@@ -117,13 +132,12 @@ export default observer(function ActivityForm() {
       </div>
       {/* Buttons */}
       <div className="mt-6 flex justify-between">
-        <button
-          type="button"
-          onClick={closeForm}
+        <NavLink
+          to={id ? `/activities/${id}` : `/activities`}
           className="rounded-md bg-gray-300 px-4 py-2 text-gray-700 font-semibold hover:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
         >
           Cancel
-        </button>
+        </NavLink>
         <button
           type="submit"
           className="rounded-md bg-indigo-600 px-4 py-2 text-white font-semibold hover:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
