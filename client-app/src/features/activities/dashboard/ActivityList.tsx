@@ -1,92 +1,28 @@
-import { SyntheticEvent, useState } from "react";
 import { useStore } from "../../../stores/store";
 import { observer } from "mobx-react-lite";
-import { NavLink } from "react-router-dom";
+import ActivityListItem from "./ActivityListItem";
 
 export default observer(function ActivityList() {
-  const [target, setTarget] = useState('');
-  const {activityStore} = useStore();
-  const {activitiesByDate, deleteActivity, loading} = activityStore;
-
-  function handleActivityDelete(e: SyntheticEvent<HTMLButtonElement>, id: string){
-    setTarget(e.currentTarget.name);
-    deleteActivity(id);
-  }
+  const { activityStore } = useStore();
+  const { groupActivities } = activityStore;
 
   return (
-    <div className="flex flex-col items-center gap-6">
-      {activitiesByDate.map((activity, index) => (
-        <div
-          key={index}
-          className="w-full max-w-2xl bg-white border border-gray-300 rounded-lg shadow-md overflow-hidden"
-        >
-          {/* Header: Title */}
-          <div className="p-4 border-b border-gray-200">
-            <h2 className="text-lg font-bold text-gray-800">{activity.title}</h2>
-            <p className="text-sm text-gray-500">
-              Posted on {activity.date} in {activity.city}
-            </p>
-          </div>
+    <div className="flex flex-col gap-8">
+      {groupActivities.map(([group, activities]) => (
+        <section key={group} className="w-full">
+          {/* Group Header */}
+          <header className="text-lg font-semibold mb-4 text-gray-800 border-b pb-2">
+            {group}
+          </header>
 
-          {/* Content: Description */}
-          <div className="pt-4 pl-4">
-            <p className="text-gray-700">{activity.description}</p>
+          {/* Activity Items */}
+          <div className="flex flex-col items-center gap-6">
+            {activities.map((activity) => (
+              <ActivityListItem key={activity.id} activity={activity} />
+            ))}
           </div>
-
-          {/* Content: city and venue */}
-          <div className="pt-1 pl-4 pb-3">
-            <p className="text-sm text-gray-600">
-              <span className="font-medium">Location:</span> {activity.city}, {activity.venue}
-            </p>
-          </div>
-
-          {/* Footer: Actions */}
-          <div className="p-4 border-t border-gray-200 flex justify-between items-center">
-            <p className="text-sm text-gray-600 border border-gray-300 rounded-lg h-10 flex items-center px-4 py-1">
-              {activity.category}
-            </p>
-            <NavLink
-              to={`/activities/${activity.id}`}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded-lg h-10 flex items-center gap-2 shadow-md hover:shadow-lg transition-all duration-300"
-            >
-              View
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-4 h-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 9V5.25a2.25 2.25 0 00-2.25-2.25h-6a2.25 2.25 0 00-2.25 2.25v13.5a2.25 2.25 0 002.25 2.25H9m6.75-6.75L21 12m0 0l-5.25-5.25M21 12H9"
-                />
-              </svg>
-            </NavLink>
-            <button
-              onClick={(e) => handleActivityDelete(e, activity.id)}
-              type="submit"
-              name={activity.id}
-              className="bg-red-500 text-white text-sm px-4 py-2 rounded-lg h-10 flex items-center gap-2 shadow-md hover:bg-red-600 hover:shadow-lg transition-all duration-300"
-              disabled={loading}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                className="w-4 h-4"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-              {target === activity.id && loading ? "Deleting..." : "Delete"}
-            </button>
-          </div>
-        </div>
+        </section>
       ))}
     </div>
   );
-})
+});

@@ -1,84 +1,51 @@
 import { observer } from "mobx-react-lite";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { useStore } from "../../../stores/store";
-import { NavLink, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import ActivityDetailedChats from "./ActivityDetailedChats";
+import ActivityDetailedSideBar from "./ActivityDetailedSideBar";
+import ActivityDetailedHeader from "./ActivityDetailedheader";
+import ActivityDetailedInfo from "./ActivitydetailedInfo";
 
 export default observer(function ActivityDetails() {
-    const {activityStore} = useStore();
-    const { selectedActivity: activity, loadActivity, loadingInitial } = activityStore;
-    
-    const { id } = useParams();
-    useEffect(() => {
-        if (id) loadActivity(id);
-    }, [id, loadActivity]);
+  const { activityStore } = useStore();
+  const { selectedActivity: activity, loadActivity, loadingInitial } = activityStore;
+  const { id } = useParams();
 
+  useEffect(() => {
+    if (id) loadActivity(id);
+  }, [id, loadActivity]);
 
-    if (loadingInitial || !activity) return <LoadingComponent />
+  if (loadingInitial) {
     return (
-    <div className="max-w-md mx-auto bg-gradient-to-br from-white via-gray-100 to-gray-50 border border-gray-300 rounded-3xl shadow-2xl overflow-hidden transition-transform duration-500 hover:scale-105 hover:shadow-2xl">
-    {/* Image Section */}
-    <img
-        src={`/assets/categoryImages/${activity.category}.jpg`}
-        alt={`${activity.category}`}
-        className="w-full h-64 object-cover rounded-t-3xl"
-    />
+      <div className="flex justify-center items-center h-screen">
+        <LoadingComponent />
+      </div>
+    );
+  }
 
-    {/* Content Section */}
-    <div className="p-8">
-        <h2 className="text-3xl font-extrabold text-gray-900 mb-4 tracking-tight">
-        {activity.title}
-        </h2>
-        <p className="text-sm text-gray-500 mb-4 italic">
-        {new Date(activity.date).toLocaleDateString()}
-        </p>
-        <p className="text-gray-800 text-lg leading-relaxed">
-        {activity.description}
-        </p>
-    </div>
+  if (!activity) {
+    return (
+      <p className="text-center text-gray-500 mt-10 text-lg">
+        Activity not found.
+      </p>
+    );
+  }
 
-    {/* Section for the buttons at the bottom of the card */}
-    <div className="px-6 py-4 bg-gradient-to-r from-teal-50 to-rose-50 border-t border-gray-300">
-        <div className="flex justify-between items-center">
-            <NavLink 
-                to={`/manage/${id}`} className="flex items-center gap-2 bg-gradient-to-r from-teal-500 via-teal-600 to-teal-700 text-white font-medium text-sm px-5 py-2.5 rounded-full shadow-md hover:from-teal-600 hover:to-teal-800 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-300 transition-all duration-200">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="2"
-                    stroke="currentColor"
-                    className="w-4 h-4"
-                >
-                    <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 12h14M12 5l7 7-7 7"
-                    />
-                </svg>
-                Edit
-                </NavLink>
-                <NavLink
-                    to={`/activities`}
-                    className="flex items-center gap-2 bg-gradient-to-r from-rose-500 via-rose-600 to-rose-700 text-white font-medium text-sm px-5 py-2.5 rounded-full shadow-md hover:from-rose-600 hover:to-rose-800 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-rose-300 transition-all duration-200">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="2"
-                        stroke="currentColor"
-                        className="w-4 h-4"
-                    >
-                        <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
-                        />
-                    </svg>
-                    Cancel
-                </NavLink>
-            </div>
-        </div>
+  return (
+    <div className="container mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
+      {/* Left Column: Main Content */}
+      <div className="lg:col-span-2 ">
+        <ActivityDetailedHeader activity={activity} />
+        <ActivityDetailedInfo activity={activity} />
+        <ActivityDetailedChats />
+      </div>
+
+      {/* Right Column: Sidebar */}
+      <div className="lg:col-span-1">
+        <ActivityDetailedSideBar />
+      </div>
     </div>
   );
-})
+});

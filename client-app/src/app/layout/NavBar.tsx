@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 export default function NavBar() {
 
   return (
-    <nav className="bg-gray-800">
+    <nav className="bg-gradient-to-b from-gray-800 to-gray-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Left: Logo */}
@@ -17,8 +17,8 @@ export default function NavBar() {
               }`
             }
           >
-            <img className="h-8 w-8" src="/assets/logo.png" alt="Logo" />
-            <span className="ml-3 text-xl font-semibold">Reactivities</span>
+            <img className="h-auto w-12" src="/assets/logo.png" alt="Logo" />
+            <span className="ml-3 text-4xl font-bold bg-gradient-to-r from-teal-400 to-white bg-clip-text text-transparent">Eventia</span>
           </NavLink>
 
           {/* Center: Navigation Links */}

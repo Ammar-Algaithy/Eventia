@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.react-calendar {
+    width: 100%;
+    border: none;
+    margin-top: 16px;
+    color: #e2e8f0; /* Matches gray-300 */
+    border-radius: 8px; /* Adds consistent rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+  }
+  
+  .react-calendar__tile {
+    color: black; /* Matches gray-400 */
+    padding: 10px;
+
+    border-radius: 6px; /* Matches buttons in your design */
+    transition: background-color 0.2s, color 0.2s;
+  }
+  
+  .react-calendar__tile:hover {
+    color: #319795; /* Matches hover:text-white */
+    background-color: #111827;
+  }
+  
+  .react-calendar__tile--active {
+    background-color: #319795; /* Matches teal-600 */
+    color: #ffffff; /* Text on active tiles */
+  }
+  
+  .react-calendar__navigation {
+    background: linear-gradient(to bottom, #1F2937, #111827); /* Gradient from gray-800 to gray-900 */
+    color: #f9f9f9; /* Matches text color */
+    padding: 10px;
+    border-radius: 8px 8px 0 0; /* Rounds the top of the calendar */
+}
+
+  
+  .react-calendar__navigation button {
+    color: white; /* Matches gray-400 */
+    transition: color 0.2s;
+  }
+  
+  .react-calendar__navigation:hover {
+    background-color: none;
+  }
+  .react-calendar__navigation button:hover {
+    color: white; 
+    background-color: none;
+  }
+  
+  .react-calendar__month-view__days__day--weekend {
+    color: #ef3756; /* Matches red-500 for weekends */
+  }
+  

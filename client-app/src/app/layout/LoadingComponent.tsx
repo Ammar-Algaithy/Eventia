@@ -9,7 +9,7 @@ interface Props {
   }: Props) {
     return (
       <div
-        className={`flex items-center justify-center h-screen ${
+        className={`fixed top-0 left-0 w-full h-full z-50 flex items-center justify-center ${
           inverted ? "bg-gray-800 text-white" : "bg-white text-gray-900"
         }`}
       >
@@ -18,6 +18,7 @@ interface Props {
           <p className="text-lg font-semibold">{content}</p>
         </div>
       </div>
+
     );
   }
   

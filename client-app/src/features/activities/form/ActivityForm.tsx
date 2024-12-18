@@ -50,12 +50,12 @@ export default observer(function ActivityForm() {
 
   return (
     <form
-      className="space-y-8 mb-4 max-w-xl mx-auto bg-white p-8 border border-gray-270 rounded-xl shadow-lg"
+      className="space-y-8 mb-4 max-w-xl mx-auto bg-gradient-to-br from-gray-800 to-gray-900 p-8 border border-gray-270 rounded-xl shadow-lg"
       onSubmit={handleSubmit}
     >
       <div className="border-b border-gray-300 pb-8">
-        <h2 className="text-lg font-semibold text-gray-900">Create a New Activity</h2>
-        <p className="mt-2 text-sm text-gray-600">Fill in the details to add a new activity.</p>
+        <h2 className="text-lg font-semibold bg-gradient-to-r from-teal-400 to-white bg-clip-text text-transparent">Create a New Activity</h2>
+        <p className="mt-2 text-sm text-gray-200">Fill in the details to add a new activity.</p>
         <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           {/* Title */}
           <div className="sm:col-span-4">
@@ -66,7 +66,7 @@ export default observer(function ActivityForm() {
               placeholder="Title"
               value={activity.title}
               onChange={handleInputChange}
-              className="block h-12 w-full border border-dashed rounded-md border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="block h-12 w-full border rounded-md border-gray-900 px-3 py-2 text-gray-900 shadow-sm"
             />
           </div>
           {/* Date */}
@@ -77,7 +77,7 @@ export default observer(function ActivityForm() {
               id="date"
               value={activity.date}
               onChange={handleInputChange}
-              className="block h-12 w-full border border-dashed rounded-md border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="block h-12 w-full border rounded-md border-gray-900 px-3 py-2 text-gray-900 shadow-sm"
             />
           </div>
           {/* Description */}
@@ -89,7 +89,7 @@ export default observer(function ActivityForm() {
               value={activity.description}
               onChange={handleInputChange}
               placeholder="Description"
-              className="block w-full border border-dashed rounded-md border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="block w-full border rounded-md border-gray-900 px-3 py-2 text-gray-900 shadow-sm"
             ></textarea>
           </div>
           {/* Category */}
@@ -101,7 +101,7 @@ export default observer(function ActivityForm() {
               value={activity.category}
               onChange={handleInputChange}
               placeholder="Category"
-              className="block h-12 w-full border border-dashed rounded-md border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="block h-12 w-full border rounded-md border-gray-900 px-3 py-2 text-gray-900 shadow-sm"
             />
           </div>
           {/* City */}
@@ -113,7 +113,7 @@ export default observer(function ActivityForm() {
               value={activity.city}
               onChange={handleInputChange}
               placeholder="City"
-              className="block h-12 w-full border border-dashed rounded-md border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="block h-12 w-full border rounded-md border-gray-900 px-3 py-2 text-gray-900 shadow-sm"
             />
           </div>
           {/* Venue */}
@@ -125,7 +125,7 @@ export default observer(function ActivityForm() {
               value={activity.venue}
               onChange={handleInputChange}
               placeholder="Venue"
-              className="block h-12 w-full border border-dashed rounded-md border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="block h-12 w-full border rounded-md border-gray-900 px-3 py-2 text-gray-900 shadow-sm"
             />
           </div>
         </div>
@@ -140,7 +140,7 @@ export default observer(function ActivityForm() {
         </NavLink>
         <button
           type="submit"
-          className="rounded-md bg-indigo-600 px-4 py-2 text-white font-semibold hover:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="rounded-md bg-gradient-to-r from-teal-400 to-teal-300 px-4 py-2 text-gray-900 font-semibold hover:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           {loading ? "Saving..." : "Save"}
         </button>
