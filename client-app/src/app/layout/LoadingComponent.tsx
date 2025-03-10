@@ -1,6 +1,6 @@
 interface Props {
-    inverted?: boolean; // Optional prop
-    content?: string; // Optional prop
+    inverted?: boolean;
+    content?: string;
   }
   
   export default function LoadingComponent({
@@ -18,7 +18,6 @@ interface Props {
           <p className="text-lg font-semibold">{content}</p>
         </div>
       </div>
-
     );
   }
   
